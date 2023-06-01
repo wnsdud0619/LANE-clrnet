@@ -15,13 +15,14 @@ from clrnet.datasets import build_dataloader
 from clrnet.utils.recorder import build_recorder
 from clrnet.utils.net_utils import save_model, load_network, resume_network
 from mmcv.parallel import MMDataParallel
-
+from torch.utils.tensorboard import SummaryWriter
 
 class Runner(object):
     def __init__(self, cfg):
         torch.manual_seed(cfg.seed)
         np.random.seed(cfg.seed)
         random.seed(cfg.seed)
+        self.writer = SummaryWriter() 
         self.cfg = cfg
         self.recorder = build_recorder(self.cfg)
         self.net = build_net(self.cfg)
@@ -69,6 +70,7 @@ class Runner(object):
             self.recorder.update_loss_stats(output['loss_stats'])
             self.recorder.batch_time.update(batch_time)
             self.recorder.data_time.update(date_time)
+            self.writer.add_scalar("Loss/train", loss, epoch)
 
             if i % self.cfg.log_interval == 0 or i == max_iter - 1:
                 lr = self.optimizer.param_groups[0]['lr']
@@ -100,6 +102,9 @@ class Runner(object):
                 break
             if self.cfg.lr_update_by_epoch:
                 self.scheduler.step()
+
+        self.writer.flush()
+        self.writer.close()    
 
     def test(self):
         if not self.test_loader:
