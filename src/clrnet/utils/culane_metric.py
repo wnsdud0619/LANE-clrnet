@@ -33,10 +33,10 @@ def discrete_cross_iou(xs, ys, width=30, img_shape=(1200, 1920, 3)):
     for i, x in enumerate(xs):
         for j, y in enumerate(ys):
             ious[i, j] = (x & y).sum() / (x | y).sum()
-            if math.isnan((x & y).sum() / (x | y).sum()):
-                ious[i, j] = 0
-            # else:
-            #     ious[i, j] = (x & y).sum() / (x | y).sum()
+            # if math.isnan((x & y).sum() / (x | y).sum()):
+            #     ious[i, j] = 1
+            # # else:
+            # #     ious[i, j] = (x & y).sum() / (x | y).sum()
     return ious
 
 
@@ -58,10 +58,10 @@ def continuous_cross_iou(xs, ys, width=30, img_shape=(1200, 1920, 3)):
     for i, x in enumerate(xs):
         for j, y in enumerate(ys):
             ious[i, j] = (x & y).sum() / (x | y).sum()
-            if math.isnan((x & y).sum() / (x | y).sum()):
-                 ious[i, j] = 0
-            # else:
-            #     ious[i, j] = (x & y).sum() / (x | y).sum()
+            # if math.isnan((x & y).sum() / (x | y).sum()):
+            #      ious[i, j] = 1
+            # # else:
+            # #     ious[i, j] = (x & y).sum() / (x | y).sum()
     return ious
 
 def interp(points, n=50):
@@ -154,7 +154,8 @@ def eval_predictions(pred_dir,
     logger.info('Calculating metric for List: {}'.format(list_path))
     predictions = load_culane_data(pred_dir, list_path)
     annotations = load_culane_data(anno_dir, list_path)
-    img_shape = (590, 1640, 3)
+
+    img_shape = (1200, 1920, 3)
     if sequential:
         results = map(
             partial(culane_metric,

@@ -53,7 +53,8 @@ def imshow_lanes(img, lanes, show=False, out_file=None, width=4):
     for idx, xys in enumerate(lanes_xys):
         for i in range(1, len(xys)):
             cv2.line(img, xys[i - 1], xys[i], COLORS[idx], thickness=width)
-
+            #print(xys[i])
+    #print("end")
 
     if show:
         cv2.imshow('view', img)

@@ -1,4 +1,8 @@
+sudo python main.py /home/dgist/catkin_ws/src/configs/clrnet/clr_dla34_culane.py --gpus 0 --finetune_from /home/dgist/catkin_ws/src/CULane.pth
+
 sudo python main.py /home/dgist/catkin_ws/src/configs/clrnet/clr_dla34_culane.py --gpus 0
 
-
 python -m tensorboard.main --logdir=.
+
+
+python main.py /home/dgist/catkin_ws/src/configs/clrnet/clr_dla34_culane.py --validate --load_from /home/dgist/catkin_ws/src/29.pth --gpus 0 --view

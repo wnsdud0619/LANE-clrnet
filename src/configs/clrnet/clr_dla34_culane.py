@@ -10,8 +10,8 @@ num_points = 72
 max_lanes = 4
 ori_img_w = 1920
 ori_img_h = 1200
-bbox_h_start = 400
-sample_y = range(ori_img_h, bbox_h_start, -20)
+bbox_h_start = 300
+sample_y = range(ori_img_h -1, bbox_h_start, -20)
 
 heads = dict(type='CLRHead',
              num_priors=192,
